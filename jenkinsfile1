@@ -1,0 +1,35 @@
+pipeline{
+agent any
+ tool name: 'Maven 8.5', type: 'maven'
+stages{
+  stage('Git'){
+     steps{
+     git credentialsId: 'cd8c92c9-3843-4d45-8445-75a8ff5b891d', url: 'https://github.com/Shimam5/maven-web-app.git'
+     }
+     }
+     stage('Maven'){
+        steps{
+        sh 'clean package'
+        }
+       }
+       stage('Deploy'){
+          steps{
+             deploy adapters: [tomcat8(credentialsId: '2f4df1cd-99c5-44f2-9a1c-bf8820475273', path: '', url: 'http://18.60.39.185:8080')], contextPath: 'maven-webapp', war: '**/*.war'
+          }
+       }
+     }
+  }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
